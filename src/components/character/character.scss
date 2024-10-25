@@ -1,0 +1,59 @@
+.character-card {
+  border-radius: 0.5rem;
+  background-color: #3c3e44;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+
+  &:not(:last-child) {
+    margin-bottom: 30px;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  img {
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    width: 100%;
+    object-fit: cover;
+    height: 200px;
+  }
+}
+
+.character-details {
+  padding: 20px;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  display: block;
+  border-radius: 50%;
+
+  &.alive {
+    background-color: rgb(61, 214, 46);
+  }
+
+  &.dead {
+    background-color: rgb(214, 61, 46);
+  }
+}
+
+.character-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: bold;
+}
+
+.character-info {
+  margin-top: 25px;
+
+  span {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: rgb(158, 158, 158);
+  }
+}

@@ -15,11 +15,11 @@ const ListComponent = () => {
   useEffect(() => {
     dispatch(fetchCharactersRequest());
     ApiService.getCharacters();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
-      <h1>Characters List</h1>
+      <h1>Rick & Morty</h1>
       {isLoading ? (
         <p>Loading...</p>
       ) : (

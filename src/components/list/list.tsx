@@ -26,7 +26,7 @@ const ListComponent = () => {
         <section className="character-grid">
           {characters.results &&
             characters.results.map((character: CharacterType) => (
-              <CharacterComponent character={character} />
+              <CharacterComponent key={character.id} character={character} />
             ))}
         </section>
       )}

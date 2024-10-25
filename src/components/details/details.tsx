@@ -1,13 +1,15 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { CharacterType } from '../../interfaces/character';
 
 const DetailsComponent = () => {
   const { id } = useParams();
   const characters = useSelector((state: any) => state.characters.data);
-  const character = characters.find(
-    (character: CharacterType) => character.id === parseInt(id!)
-  );
+  const character =
+    characters && characters.results
+      ? characters.results.find(
+          (character: any) => character.id === parseInt(id!)
+        )
+      : null;
 
   if (!character) {
     return <div>Character not found</div>;

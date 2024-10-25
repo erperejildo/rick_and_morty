@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CharacterType } from '../../interfaces/character';
 import './character.scss';
 
@@ -7,8 +8,18 @@ interface Props {
 }
 
 const CharacterComponent: React.FC<Props> = ({ character }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/details/${character.id}`);
+  };
+
   return (
-    <article key={character.id} className="character-card">
+    <article
+      key={character.id}
+      className="character-card"
+      onClick={handleClick}
+    >
       <img src={character.image} alt={character.name} />
       <div className="character-details">
         <h2>{character.name}</h2>

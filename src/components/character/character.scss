@@ -9,10 +9,7 @@
   opacity: 0;
   transform: translateY(10px);
   animation: fadeIn 0.5s ease forwards;
-
-  &:not(:last-child) {
-    margin-bottom: 30px;
-  }
+  margin-bottom: 30px;
 
   &:hover {
     img {
@@ -25,12 +22,19 @@
   }
 
   img {
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
     width: 100%;
     object-fit: cover;
     height: 200px;
     transition: transform 0.3s ease;
+  }
+
+  @media (min-width: 450px) and (max-width: 510px) {
+    flex-direction: row;
+
+    img {
+      width: 155px;
+      height: 100%;
+    }
   }
 }
 .character-details {

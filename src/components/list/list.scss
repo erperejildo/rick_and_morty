@@ -1,16 +1,38 @@
+.filter {
+  color: rgb(158, 158, 158);
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.filter-element {
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+
+  .status-dot {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+
+    &:not(:last-child) {
+      margin-right: 0.5rem;
+    }
+
+    &.active {
+      box-shadow: 0 0 5px yellow;
+    }
+  }
+}
+
 .character-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  padding: 2rem;
   column-gap: 2rem;
+  margin-top: 2rem;
 
   @media (max-width: 499px) {
     grid-template-columns: repeat(1, 1fr);
   }
-}
-
-h1 {
-  margin-bottom: 0;
-  margin-left: 2rem;
-  margin-right: 2rem;
 }

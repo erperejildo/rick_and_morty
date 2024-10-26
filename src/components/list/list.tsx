@@ -23,8 +23,10 @@ const ListComponent: React.FC = () => {
   );
 
   useEffect(() => {
-    dispatch(fetchCharacters());
-  }, [dispatch]);
+    if (!data.characters) {
+      dispatch(fetchCharacters());
+    }
+  }, [data.characters, dispatch]);
 
   useEffect(() => {
     if (data.characters) {

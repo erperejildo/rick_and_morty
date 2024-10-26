@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { CharacterResultsAPIType } from '../interfaces/character';
+import { EpisodeAPIType } from '../interfaces/episode';
 
 const API_URL = 'https://rickandmortyapi.com/api';
 
@@ -12,7 +13,7 @@ const api: AxiosInstance = axios.create({
 
 interface ApiServiceType {
   getCharacters: () => Promise<CharacterResultsAPIType>;
-  getEpisodes: (characterDetails: string[]) => Promise<any>;
+  getEpisodes: (characterDetails: string) => Promise<any>;
 }
 
 const ApiService: ApiServiceType = {
@@ -24,14 +25,10 @@ const ApiService: ApiServiceType = {
       throw error;
     }
   },
-  getEpisodes: async (characterDetails: string[]): Promise<any> => {
+  getEpisodes: async (episodeLink: string): Promise<EpisodeAPIType> => {
     try {
-      const episodeIds = characterDetails.map((detail) =>
-        detail.split('/').pop()
-      );
-      const episodeRequests = episodeIds.map((id) => api.get(`/episode/${id}`));
-      const responses = await Promise.all(episodeRequests);
-      return responses.map((response) => response.data);
+      const response: AxiosResponse = await api.get(episodeLink);
+      return response.data;
     } catch (error: any) {
       throw error;
     }

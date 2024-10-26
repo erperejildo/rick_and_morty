@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchCharacters } from '../../features/rickAndMortyActions';
-import { updateCharacter } from '../../features/rickAndMortySlices';
+import {
+  fetchCharacters,
+  fetchEpisodes,
+} from '../../features/rickAndMortyActions';
 import {
   CharacterResultsAPIType,
   CharacterResultsType,
@@ -20,31 +22,28 @@ const DetailsComponent = () => {
   );
   const [character, setCharacter] = useState<CharacterResultsType | null>(null);
 
+  // we loaded details without coming from the list
   useEffect(() => {
-    if (!data.characters && !isLoading) {
+    if (!data?.characters && !isLoading) {
       dispatch(fetchCharacters());
     }
-  }, [data.characters, isLoading, dispatch]);
+  }, [data?.characters, isLoading, dispatch]);
 
   useEffect(() => {
-    if (data.characters) {
+    if (data?.characters) {
       const characterFound = data.characters.results.find(
-        (character: CharacterResultsAPIType) => character.id === parseInt(id!)
+        (character: CharacterResultsAPIType | CharacterResultsType) =>
+          character.id === parseInt(id!)
       ) as CharacterResultsType;
 
       if (characterFound) {
         setCharacter(characterFound);
-
-        if (!characterFound.episodesInfo) {
-          const characterWithEpisodesInfo: CharacterResultsType = {
-            ...characterFound,
-            episodesInfo: [],
-          };
-          dispatch(updateCharacter(characterWithEpisodesInfo));
+        if (!characterFound.firstEpisode && characterFound.episode[0]) {
+          dispatch(fetchEpisodes(characterFound.episode[0], characterFound.id));
         }
       }
     }
-  }, [data.characters, id, dispatch]);
+  }, [data.characters, id, dispatch, character]);
 
   return (
     <div className="details">
@@ -61,7 +60,9 @@ const DetailsComponent = () => {
           <p>Gender: {character.gender}</p>
           <p>Origin: {character.origin.name}</p>
           <p>Location: {character.location.name}</p>
-          <p>Episodes: {character.episodesInfo.length}</p>
+          {character.firstEpisode && (
+            <p>First Episode: {character.firstEpisode.name}</p>
+          )}
           {character.episode.length > 0 && (
             <>
               <p>Episodes:</p>

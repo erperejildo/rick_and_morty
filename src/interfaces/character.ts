@@ -32,5 +32,5 @@ export interface CharacterResultsAPIType {
 }
 
 export interface CharacterResultsType extends CharacterResultsAPIType {
-  episodesInfo: Array<EpisodeAPIType>;
+  firstEpisode: EpisodeAPIType;
 }

@@ -4,6 +4,7 @@ import { fetchCharacters } from '../../features/rickAndMortyActions';
 import { CharacterType } from '../../interfaces/character';
 import { AppDispatch, RootState } from '../../store';
 import CharacterComponent from '../character/character';
+import SpinnerComponent from '../spinner/spinner';
 import './list.scss';
 
 const ListComponent: React.FC = () => {
@@ -22,7 +23,7 @@ const ListComponent: React.FC = () => {
     <div>
       <h1>Rick & Morty</h1>
       {isLoading ? (
-        <p>Loading...</p>
+        <SpinnerComponent />
       ) : (
         <section className="character-grid">
           {characters.results &&

@@ -55,23 +55,39 @@ const DetailsComponent = () => {
             <img src={character.image} alt={character.name} />
           </div>
           <h1>{character.name}</h1>
-          <p>Status: {character.status}</p>
-          <p>Species: {character.species}</p>
-          <p>Gender: {character.gender}</p>
-          <p>Origin: {character.origin.name}</p>
-          <p>Location: {character.location.name}</p>
+          <p>
+            <span className="bold">status</span> {character.status}
+          </p>
+          <p>
+            <span className="bold">species</span> {character.species}
+          </p>
+          <p>
+            <span className="bold">gender</span> {character.gender}
+          </p>
+          <p>
+            <span className="bold">origin</span> {character.origin.name}
+          </p>
+          <p>
+            <span className="bold">location</span> {character.location.name}
+          </p>
           {character.firstEpisode && (
-            <p>First Episode: {character.firstEpisode.name}</p>
-          )}
-          {character.episode.length > 0 && (
-            <>
-              <p>Episodes:</p>
-              <ul>
-                {character.episode.map((episode: string, index: number) => (
-                  <li key={index}>{episode}</li>
-                ))}
-              </ul>
-            </>
+            <div className="first-episode">
+              <div className="bold title">First Appearance</div>
+              <div className="bottom-info">
+                <div>
+                  <div>{character.firstEpisode.name}</div>
+                  <div className="bold">in</div>
+                </div>
+                <div>
+                  <div>{character.firstEpisode.episode}</div>
+                  <div className="bold">where</div>
+                </div>
+                <div>
+                  <div>{character.firstEpisode.air_date}</div>
+                  <div className="bold">when</div>
+                </div>
+              </div>
+            </div>
           )}
         </>
       )}

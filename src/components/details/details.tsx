@@ -1,15 +1,33 @@
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { fetchCharactersRequest } from '../../features/rickAndMortySlices';
 
 const DetailsComponent = () => {
   const { id } = useParams();
-  const characters = useSelector((state: any) => state.characters.data);
+  const characters = useSelector((state: any) => state.characters);
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!characters.data || !characters.data.results) {
+      setLoading(true);
+      dispatch(fetchCharactersRequest());
+    } else {
+      setLoading(false);
+    }
+  }, [characters, dispatch]);
+
   const character =
-    characters && characters.results
-      ? characters.results.find(
+    characters.data && characters.data.results
+      ? characters.data.results.find(
           (character: any) => character.id === parseInt(id!)
         )
       : null;
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   if (!character) {
     return <div>Character not found</div>;

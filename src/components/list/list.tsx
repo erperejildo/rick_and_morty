@@ -1,20 +1,21 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCharactersRequest } from '../../features/rickAndMortySlices';
+import { fetchCharacters } from '../../features/rickAndMortyActions';
 import { CharacterType } from '../../interfaces/character';
-import ApiService from '../../services/api.service';
+import { AppDispatch, RootState } from '../../store';
 import CharacterComponent from '../character/character';
 import './list.scss';
 
-const ListComponent = () => {
-  const dispatch = useDispatch();
-  const characters = useSelector((state: any) => state.characters.data);
-  const error = useSelector((state: any) => state.characters.error);
-  const isLoading = useSelector((state: any) => state.characters.isLoading);
+const ListComponent: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const characters = useSelector((state: RootState) => state.characters.data);
+  const error = useSelector((state: RootState) => state.characters.error);
+  const isLoading = useSelector(
+    (state: RootState) => state.characters.isLoading
+  );
 
   useEffect(() => {
-    dispatch(fetchCharactersRequest());
-    ApiService.getCharacters();
+    dispatch(fetchCharacters());
   }, [dispatch]);
 
   return (

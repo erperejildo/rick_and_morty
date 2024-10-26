@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface RickAndMortyState {
-  data: any[];
+  data: { results: any[] };
   error: string | null;
   isLoading: boolean;
 }
 
 const initialState: RickAndMortyState = {
-  data: [],
+  data: { results: [] },
   error: null,
   isLoading: false,
 };
@@ -18,12 +18,13 @@ const rickAndMortySlice = createSlice({
   reducers: {
     fetchCharactersRequest(state) {
       state.isLoading = true;
+      state.error = null;
     },
     fetchCharactersSuccess(state, action: PayloadAction<any>) {
       state.data = action.payload;
       state.isLoading = false;
     },
-    fetchCharactersFailure(state, action: PayloadAction<any>) {
+    fetchCharactersFailure(state, action: PayloadAction<string>) {
       state.error = action.payload;
       state.isLoading = false;
     },

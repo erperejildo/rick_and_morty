@@ -1,0 +1,29 @@
+@import '../../styles/main.scss';
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+
+  img {
+    border-radius: 8px;
+  }
+}
+
+.details {
+  @include fadeInAnimation;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+
+  img {
+    border-radius: 8px;
+  }
+}
+
+.not-found {
+  text-align: center;
+}

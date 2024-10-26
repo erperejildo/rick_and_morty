@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CharacterType } from '../../interfaces/character';
+import { CharacterResultsAPIType } from '../../interfaces/character';
 import './character.scss';
 
 interface Props {
-  character: CharacterType;
+  character: CharacterResultsAPIType;
 }
 
 const CharacterComponent: React.FC<Props> = ({ character }) => {

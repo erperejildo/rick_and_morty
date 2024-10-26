@@ -1,4 +1,16 @@
-export interface CharacterType {
+import { EpisodeAPIType } from './episode';
+
+export interface CharactersAPIType {
+  info: {
+    count: number;
+    next: string;
+    pages: number;
+    prev: any;
+  };
+  results: Array<CharacterResultsAPIType | CharacterResultsType>;
+}
+
+export interface CharacterResultsAPIType {
   created: string;
   episode: Array<string>;
   gender: string;
@@ -17,4 +29,8 @@ export interface CharacterType {
   status: string;
   type: string;
   url: string;
+}
+
+export interface CharacterResultsType extends CharacterResultsAPIType {
+  episodesInfo: Array<EpisodeAPIType>;
 }

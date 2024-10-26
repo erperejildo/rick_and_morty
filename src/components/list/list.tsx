@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCharacters } from '../../features/rickAndMortyActions';
-import { CharacterType } from '../../interfaces/character';
+import { CharacterResultsAPIType } from '../../interfaces/character';
 import { AppDispatch, RootState } from '../../store';
 import CharacterComponent from '../character/character';
 import SpinnerComponent from '../spinner/spinner';
@@ -9,12 +9,14 @@ import './list.scss';
 
 const ListComponent: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const characters = useSelector((state: RootState) => state.characters.data);
-  const error = useSelector((state: RootState) => state.characters.error);
+  const data = useSelector((state: RootState) => state.storeData.data);
+  const error = useSelector((state: RootState) => state.storeData.error);
   const isLoading = useSelector(
-    (state: RootState) => state.characters.isLoading
+    (state: RootState) => state.storeData.isLoading
   );
-  const [sortedCharacters, setSortedCharacters] = useState<CharacterType[]>([]);
+  const [sortedCharacters, setSortedCharacters] = useState<
+    CharacterResultsAPIType[]
+  >([]);
   const [nameSort, setNameSort] = useState<'asc' | 'desc' | null>(null);
   const [statusFilter, setStatusFilter] = useState<'alive' | 'dead' | 'any'>(
     'any'
@@ -25,11 +27,11 @@ const ListComponent: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (characters.results) {
-      const sorted = [...characters.results];
+    if (data.characters) {
+      const sorted = [...data.characters.results];
       setSortedCharacters(sorted);
     }
-  }, [characters.results]);
+  }, [data.characters]);
 
   const sortByName = () => {
     const sorted = [...sortedCharacters].sort((a, b) => {
@@ -46,9 +48,9 @@ const ListComponent: React.FC = () => {
   const filterByStatus = (status: 'alive' | 'dead' | 'any') => {
     setStatusFilter(status);
     if (status === 'any') {
-      setSortedCharacters([...characters.results]);
+      setSortedCharacters([...data.characters!.results]);
     } else {
-      const filtered = characters.results.filter(
+      const filtered = data.characters!.results.filter(
         (character) => character.status.toLowerCase() === status
       );
       setSortedCharacters(filtered);
@@ -93,7 +95,7 @@ const ListComponent: React.FC = () => {
         <SpinnerComponent />
       ) : (
         <section className="character-grid">
-          {sortedCharacters.map((character: CharacterType) => (
+          {sortedCharacters.map((character: CharacterResultsAPIType) => (
             <CharacterComponent key={character.id} character={character} />
           ))}
         </section>

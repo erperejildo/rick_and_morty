@@ -73,7 +73,6 @@ const ListComponent: React.FC = () => {
       <h1>Rick & Morty</h1>
       <div className="search">
         <label htmlFor="search">
-          Search by name
           <input
             type="search"
             id="search"

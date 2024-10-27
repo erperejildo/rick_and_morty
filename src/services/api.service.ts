@@ -18,20 +18,12 @@ interface ApiServiceType {
 
 const ApiService: ApiServiceType = {
   getCharacters: async (): Promise<CharacterResultsAPIType> => {
-    try {
-      const response: AxiosResponse = await api.get('/character');
-      return response.data;
-    } catch (error: any) {
-      throw error;
-    }
+    const response: AxiosResponse = await api.get('/character');
+    return response.data;
   },
   getEpisodes: async (episodeLink: string): Promise<EpisodeAPIType> => {
-    try {
-      const response: AxiosResponse = await api.get(episodeLink);
-      return response.data;
-    } catch (error: any) {
-      throw error;
-    }
+    const response: AxiosResponse = await api.get(episodeLink);
+    return response.data;
   },
 };
 

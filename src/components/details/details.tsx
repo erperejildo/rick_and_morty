@@ -63,13 +63,10 @@ const DetailsComponent = () => {
               src={character.image}
               alt={character.name}
               className="character-image"
-              role="img"
             />
           </div>
           <div className="details-header">
-            <h1 className="character-name" role="heading">
-              {character.name}
-            </h1>
+            <h1 className="character-name">{character.name}</h1>
             <button
               className="go-back"
               onClick={handleGoBack}
@@ -108,9 +105,7 @@ const DetailsComponent = () => {
               role="region"
               aria-label="First episode"
             >
-              <div className="title" role="heading">
-                First Appearance
-              </div>
+              <div className="title">First Appearance</div>
               <div className="bottom-info">
                 <div className="character-info" role="listitem">
                   <div>{character.firstEpisode.name}</div>

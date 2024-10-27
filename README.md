@@ -21,3 +21,11 @@ When moving to details page from the list, we send the character id, so we have 
 In details we also fetch the information about the first episode. The character is updated then into the store so if we check again the same character, this information is not fetched again.
 
 Searching, ordering and filtering are available for the list. Mobile and Desktop supported.
+
+## Technologies
+
+- React for the main app (with TypeScript)
+- Redux for the state managment
+- Sass for the style
+- Prettier to keep code consistency
+- Jest for testing

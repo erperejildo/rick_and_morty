@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCharacters } from '../../features/rickAndMortyActions';
 import { CharacterResultsAPIType } from '../../interfaces/character';
@@ -36,38 +36,36 @@ const ListComponent: React.FC = () => {
     }
   }, [data.characters]);
 
-  const sortByName = () => {
-    const sorted = [...sortedCharacters].sort((a, b) => {
-      if (nameSort === 'asc') {
-        return a.name.localeCompare(b.name);
-      } else {
-        return b.name.localeCompare(a.name);
-      }
-    });
-    setSortedCharacters(sorted);
-    setNameSort(nameSort === 'asc' ? 'desc' : 'asc');
-  };
+  const sortByName = useCallback(
+    (characters: CharacterResultsAPIType[]) => {
+      return [...characters].sort((a, b) => {
+        if (nameSort === 'asc') {
+          return a.name.localeCompare(b.name);
+        } else {
+          return b.name.localeCompare(a.name);
+        }
+      });
+    },
+    [nameSort]
+  );
 
-  const filterByStatus = (status: 'alive' | 'dead' | 'any') => {
-    setStatusFilter(status);
-    const filtered = data.characters!.results.filter((character) => {
+  useEffect(() => {
+    if (!data.characters) return;
+    const filtered = data.characters.results.filter((character) => {
       const matchesStatus =
-        status === 'any' || character.status.toLowerCase() === status;
+        statusFilter === 'any' ||
+        character.status.toLowerCase() === statusFilter;
       const matchesSearch = character.name
         .toLowerCase()
         .includes(searchText.toLowerCase());
       return matchesStatus && matchesSearch;
     });
-    setSortedCharacters(filtered);
-  };
+    setSortedCharacters(sortByName(filtered));
+  }, [nameSort, statusFilter, searchText, data.characters, sortByName]);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setSearchText(value);
-    const filtered = data.characters!.results.filter((character) =>
-      character.name.toLowerCase().includes(value.toLowerCase())
-    );
-    setSortedCharacters(filtered);
   };
 
   return (
@@ -84,7 +82,10 @@ const ListComponent: React.FC = () => {
       </div>
       <div className="filter">
         Sort by:
-        <div className="filter-element" onClick={sortByName}>
+        <div
+          className="filter-element"
+          onClick={() => setNameSort(nameSort === 'asc' ? 'desc' : 'asc')}
+        >
           Name{' '}
           {nameSort === 'asc' ? (
             <span>&#8593;</span>
@@ -99,17 +100,17 @@ const ListComponent: React.FC = () => {
           <span
             className={`status-dot ${statusFilter === 'alive' ? 'active' : ''}`}
             style={{ backgroundColor: 'rgb(61, 214, 46)' }}
-            onClick={() => filterByStatus('alive')}
+            onClick={() => setStatusFilter('alive')}
           ></span>
           <span
             className={`status-dot ${statusFilter === 'dead' ? 'active' : ''}`}
             style={{ backgroundColor: 'rgb(214, 61, 46)' }}
-            onClick={() => filterByStatus('dead')}
+            onClick={() => setStatusFilter('dead')}
           ></span>
           <span
             className={`status-dot ${statusFilter === 'any' ? 'active' : ''}`}
             style={{ backgroundColor: 'grey' }}
-            onClick={() => filterByStatus('any')}
+            onClick={() => setStatusFilter('any')}
           ></span>
         </div>
       </div>
@@ -117,9 +118,13 @@ const ListComponent: React.FC = () => {
         <SpinnerComponent />
       ) : (
         <section className="character-grid">
-          {sortedCharacters.map((character: CharacterResultsAPIType) => (
-            <CharacterComponent key={character.id} character={character} />
-          ))}
+          {sortedCharacters.length ? (
+            sortedCharacters.map((character: CharacterResultsAPIType) => (
+              <CharacterComponent key={character.id} character={character} />
+            ))
+          ) : searchText ? (
+            <h3>No characters found with that name</h3>
+          ) : null}
         </section>
       )}
       {error && <p>Error: {error}</p>}

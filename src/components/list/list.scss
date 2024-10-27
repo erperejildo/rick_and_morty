@@ -39,7 +39,9 @@
     }
 
     &.active {
-      box-shadow: 0 0 5px yellow;
+      @supports not (-o-appearance: none) {
+        box-shadow: 0 0 5px yellow;
+      }
     }
   }
 }

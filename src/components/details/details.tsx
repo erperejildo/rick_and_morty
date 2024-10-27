@@ -53,57 +53,74 @@ const DetailsComponent = () => {
   };
 
   return (
-    <div className="details">
+    <div className="details" role="region" aria-label="Character details">
       {isLoading || !character ? (
         <SpinnerComponent />
       ) : (
         <>
           <div className="image-container">
-            <img src={character.image} alt={character.name} />
+            <img
+              src={character.image}
+              alt={character.name}
+              className="character-image"
+              role="img"
+            />
           </div>
           <div className="details-header">
-            <h1>{character.name}</h1>
-            <button className="go-back" onClick={handleGoBack}>
+            <h1 className="character-name" role="heading">
+              {character.name}
+            </h1>
+            <button
+              className="go-back"
+              onClick={handleGoBack}
+              aria-label="Go back to the list of characters"
+            >
               &times;
             </button>
           </div>
 
           <div className="details-group">
-            <div className="character-info">
+            <div className="character-info" role="listitem">
               <div>{character.status}</div>
               <span>status</span>
             </div>
-            <div className="character-info">
+            <div className="character-info" role="listitem">
               <div>{character.species}</div>
               <span>species</span>
             </div>
-            <div className="character-info">
+            <div className="character-info" role="listitem">
               <div>{character.gender}</div>
               <span>gender</span>
             </div>
-            <div className="character-info">
+            <div className="character-info" role="listitem">
               <div>{character.origin.name}</div>
               <span>species</span>
             </div>
-            <div className="character-info">
+            <div className="character-info" role="listitem">
               <div>{character.location.name}</div>
               <span>location</span>
             </div>
           </div>
 
           {character.firstEpisode && (
-            <div className="first-episode">
-              <div className="title">First Appearance</div>
+            <div
+              className="first-episode"
+              role="region"
+              aria-label="First episode"
+            >
+              <div className="title" role="heading">
+                First Appearance
+              </div>
               <div className="bottom-info">
-                <div className="character-info">
+                <div className="character-info" role="listitem">
                   <div>{character.firstEpisode.name}</div>
                   <span>in</span>
                 </div>
-                <div className="character-info">
+                <div className="character-info" role="listitem">
                   <div>{character.firstEpisode.episode}</div>
                   <span>where</span>
                 </div>
-                <div className="character-info">
+                <div className="character-info" role="listitem">
                   <div>{character.firstEpisode.air_date}</div>
                   <span>when</span>
                 </div>

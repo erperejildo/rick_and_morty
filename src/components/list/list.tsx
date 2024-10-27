@@ -69,28 +69,34 @@ const ListComponent: React.FC = () => {
   };
 
   return (
-    <div>
+    <div role="main">
       <h1>Rick & Morty</h1>
       <div className="search">
-        <input
-          type="search"
-          value={searchText}
-          onChange={handleSearch}
-          className="search-input"
-          placeholder="Search by name"
-        />
+        <label htmlFor="search">
+          Search by name
+          <input
+            type="search"
+            id="search"
+            value={searchText}
+            onChange={handleSearch}
+            className="search-input"
+            placeholder="Search by name"
+            aria-label="Search by name"
+          />
+        </label>
       </div>
       <div className="filter">
         Sort by:
         <div
           className="filter-element"
           onClick={() => setNameSort(nameSort === 'asc' ? 'desc' : 'asc')}
+          aria-label="Sort by name"
         >
           Name{' '}
           {nameSort === 'asc' ? (
-            <span>&#8593;</span>
+            <span aria-hidden="true">&#8593;</span>
           ) : nameSort === 'desc' ? (
-            <span>&#8595;</span>
+            <span aria-hidden="true">&#8595;</span>
           ) : null}
         </div>
       </div>
@@ -101,33 +107,42 @@ const ListComponent: React.FC = () => {
             className={`status-dot ${statusFilter === 'alive' ? 'active' : ''}`}
             style={{ backgroundColor: 'rgb(61, 214, 46)' }}
             onClick={() => setStatusFilter('alive')}
+            aria-label="Alive"
           ></span>
           <span
             className={`status-dot ${statusFilter === 'dead' ? 'active' : ''}`}
             style={{ backgroundColor: 'rgb(214, 61, 46)' }}
             onClick={() => setStatusFilter('dead')}
+            aria-label="Dead"
           ></span>
           <span
             className={`status-dot ${statusFilter === 'any' ? 'active' : ''}`}
             style={{ backgroundColor: 'grey' }}
             onClick={() => setStatusFilter('any')}
+            aria-label="All"
           ></span>
         </div>
       </div>
       {isLoading ? (
         <SpinnerComponent />
       ) : (
-        <section className="character-grid">
+        <section className="character-grid" role="list">
           {sortedCharacters.length ? (
             sortedCharacters.map((character: CharacterResultsAPIType) => (
-              <CharacterComponent key={character.id} character={character} />
+              <CharacterComponent
+                key={character.id}
+                character={character}
+                aria-label={character.name}
+              />
             ))
           ) : searchText ? (
-            <h3>No characters found with that name</h3>
+            <h3 aria-label="No characters found with that name">
+              No characters found with that name
+            </h3>
           ) : null}
         </section>
       )}
-      {error && <p>Error: {error}</p>}
+      {error && <p aria-label="Error">{error}</p>}
     </div>
   );
 };

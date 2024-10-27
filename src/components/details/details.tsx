@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   fetchCharacters,
   fetchEpisodes,
@@ -21,6 +21,7 @@ const DetailsComponent = () => {
     (state: RootState) => state.storeData.isLoading
   );
   const [character, setCharacter] = useState<CharacterResultsType | null>(null);
+  const navigate = useNavigate();
 
   // we loaded details without coming from the list
   useEffect(() => {
@@ -45,6 +46,10 @@ const DetailsComponent = () => {
     }
   }, [data.characters, id, dispatch, character]);
 
+  const handleGoBack = () => {
+    navigate('/');
+  };
+
   return (
     <div className="details">
       {isLoading || !character ? (
@@ -54,37 +59,51 @@ const DetailsComponent = () => {
           <div className="image-container">
             <img src={character.image} alt={character.name} />
           </div>
-          <h1>{character.name}</h1>
-          <p>
-            <span className="bold">status</span> {character.status}
-          </p>
-          <p>
-            <span className="bold">species</span> {character.species}
-          </p>
-          <p>
-            <span className="bold">gender</span> {character.gender}
-          </p>
-          <p>
-            <span className="bold">origin</span> {character.origin.name}
-          </p>
-          <p>
-            <span className="bold">location</span> {character.location.name}
-          </p>
+          <div className="details-header">
+            <h1>{character.name}</h1>
+            <button className="go-back" onClick={handleGoBack}>
+              &times;
+            </button>
+          </div>
+
+          <div className="details-group">
+            <div className="character-info">
+              <div>{character.status}</div>
+              <span>status</span>
+            </div>
+            <div className="character-info">
+              <div>{character.species}</div>
+              <span>species</span>
+            </div>
+            <div className="character-info">
+              <div>{character.gender}</div>
+              <span>gender</span>
+            </div>
+            <div className="character-info">
+              <div>{character.origin.name}</div>
+              <span>species</span>
+            </div>
+            <div className="character-info">
+              <div>{character.location.name}</div>
+              <span>location</span>
+            </div>
+          </div>
+
           {character.firstEpisode && (
             <div className="first-episode">
-              <div className="bold title">First Appearance</div>
+              <div className="title">First Appearance</div>
               <div className="bottom-info">
-                <div>
+                <div className="character-info">
                   <div>{character.firstEpisode.name}</div>
-                  <div className="bold">in</div>
+                  <span>in</span>
                 </div>
-                <div>
+                <div className="character-info">
                   <div>{character.firstEpisode.episode}</div>
-                  <div className="bold">where</div>
+                  <span>where</span>
                 </div>
-                <div>
+                <div className="character-info">
                   <div>{character.firstEpisode.air_date}</div>
-                  <div className="bold">when</div>
+                  <span>when</span>
                 </div>
               </div>
             </div>

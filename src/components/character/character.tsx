@@ -30,12 +30,12 @@ const CharacterComponent: React.FC<Props> = ({ character }) => {
           {character.status} - {character.gender}
         </div>
         <div className="character-info">
-          <span>Origin:</span>
           <div>{character.origin.name}</div>
+          <span>origin</span>
         </div>
         <div className="character-info">
-          <span>Las known location:</span>
           <div>{character.location.name}</div>
+          <span>last known location</span>
         </div>
       </div>
     </article>

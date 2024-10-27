@@ -1,48 +1,23 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is using React and Redux.
 
+You can test it online here:
 https://rick-dani-morty.netlify.app
 
-## Available Scripts
+## Commands
 
-In the project directory, you can run:
+- Start project locally: `npm start` (go to http://localhost:3000)
+- Runt tests: `npm test`
 
-### `npm start`
+## Flow
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The app has 2 views: list (with all characters displayed) and details (showing information from one specific character).
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+When we load the list, we fetch all characters, saving them into the store. When this happens, the call is not triggered again.
 
-### `npm test`
+When moving to details page from the list, we send the character id, so we have access to it. In case we load this page first, we fetch the characters and get the correct one. If from here we move to the list, we don't fetch them.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+In details we also fetch the information about the first episode. The character is updated then into the store so if we check again the same character, this information is not fetched again.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Searching, ordering and filtering are available for the list. Mobile and Desktop supported.

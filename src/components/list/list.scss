@@ -1,5 +1,13 @@
+.search-input {
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  outline: none;
+}
+
 .filter {
-  color: rgb(158, 158, 158);
+  color: rgb(235, 217, 217);
   display: flex;
   gap: 1rem;
   margin-top: 1rem;

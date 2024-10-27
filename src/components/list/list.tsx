@@ -21,6 +21,7 @@ const ListComponent: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState<'alive' | 'dead' | 'any'>(
     'any'
   );
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     if (!data.characters) {
@@ -49,19 +50,38 @@ const ListComponent: React.FC = () => {
 
   const filterByStatus = (status: 'alive' | 'dead' | 'any') => {
     setStatusFilter(status);
-    if (status === 'any') {
-      setSortedCharacters([...data.characters!.results]);
-    } else {
-      const filtered = data.characters!.results.filter(
-        (character) => character.status.toLowerCase() === status
-      );
-      setSortedCharacters(filtered);
-    }
+    const filtered = data.characters!.results.filter((character) => {
+      const matchesStatus =
+        status === 'any' || character.status.toLowerCase() === status;
+      const matchesSearch = character.name
+        .toLowerCase()
+        .includes(searchText.toLowerCase());
+      return matchesStatus && matchesSearch;
+    });
+    setSortedCharacters(filtered);
+  };
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setSearchText(value);
+    const filtered = data.characters!.results.filter((character) =>
+      character.name.toLowerCase().includes(value.toLowerCase())
+    );
+    setSortedCharacters(filtered);
   };
 
   return (
     <div>
       <h1>Rick & Morty</h1>
+      <div className="search">
+        <input
+          type="search"
+          value={searchText}
+          onChange={handleSearch}
+          className="search-input"
+          placeholder="Search by name"
+        />
+      </div>
       <div className="filter">
         Sort by:
         <div className="filter-element" onClick={sortByName}>

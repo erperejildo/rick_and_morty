@@ -33,6 +33,8 @@
     height: 20px;
     display: inline-block;
     vertical-align: middle;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
 
     &:not(:last-child) {
       margin-right: 0.5rem;

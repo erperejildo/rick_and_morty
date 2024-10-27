@@ -106,19 +106,22 @@ const ListComponent: React.FC = () => {
             className={`status-dot ${statusFilter === 'alive' ? 'active' : ''}`}
             style={{ backgroundColor: 'rgb(61, 214, 46)' }}
             onClick={() => setStatusFilter('alive')}
-            aria-label="Alive"
+            role="button"
+            aria-label="Alive status filter"
           ></span>
           <span
             className={`status-dot ${statusFilter === 'dead' ? 'active' : ''}`}
             style={{ backgroundColor: 'rgb(214, 61, 46)' }}
             onClick={() => setStatusFilter('dead')}
-            aria-label="Dead"
+            role="button"
+            aria-label="Dead status filter"
           ></span>
           <span
             className={`status-dot ${statusFilter === 'any' ? 'active' : ''}`}
             style={{ backgroundColor: 'grey' }}
             onClick={() => setStatusFilter('any')}
-            aria-label="All"
+            role="button"
+            aria-label="All status filter"
           ></span>
         </div>
       </div>

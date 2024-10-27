@@ -23,7 +23,6 @@ const DetailsComponent = () => {
   const [character, setCharacter] = useState<CharacterResultsType | null>(null);
   const navigate = useNavigate();
 
-  // we loaded details without coming from the list
   useEffect(() => {
     if (!data?.characters && !isLoading) {
       dispatch(fetchCharacters());
@@ -39,12 +38,15 @@ const DetailsComponent = () => {
 
       if (characterFound) {
         setCharacter(characterFound);
-        if (!characterFound.firstEpisode && characterFound.episode[0]) {
-          dispatch(fetchEpisodes(characterFound.episode[0], characterFound.id));
-        }
       }
     }
-  }, [data.characters, id, dispatch, character]);
+  }, [data.characters, id]);
+
+  useEffect(() => {
+    if (character && !character.firstEpisode && character.episode[0]) {
+      dispatch(fetchEpisodes(character.episode[0], character.id));
+    }
+  }, [character, dispatch]);
 
   const handleGoBack = () => {
     navigate('/');

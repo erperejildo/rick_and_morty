@@ -1,16 +1,17 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
-import configureMockStore, { MockStore } from 'redux-mock-store';
+import configureMockStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
 import ListComponent from '../components/list/list';
 import { charactersMock } from '../mocks/characters';
 
 const middlewares = [thunk];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mockStore = configureMockStore(middlewares as any);
 
 describe('ListComponent', () => {
-  let store: MockStore;
+  let store: ReturnType<typeof mockStore>;
 
   beforeEach(() => {
     store = mockStore({

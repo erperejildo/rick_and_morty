@@ -11,7 +11,10 @@
     color: #fff;
   }
 
-  &::-webkit-search-cancel-button {
+  &::-webkit-search-cancel-button,
+  &::-moz-search-cancel-button,
+  &::-ms-search-cancel-button,
+  &::-o-search-cancel-button {
     cursor: pointer;
     filter: invert(100%) sepia(100%) saturate(500%) hue-rotate(90deg);
     font-size: 20px;
